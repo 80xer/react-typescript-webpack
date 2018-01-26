@@ -1,15 +1,14 @@
 {
   "name": "react-todo-list",
   "version": "1.0.0",
-  "description": "",
+  "description": "lawtalk admin client",
   "main": "webpack.config.js",
   "scripts": {
-    "clean": "rm -rf dist",
-    "start": "webpack-dev-server --host 0.0.0.0 --port 8080 --hot",
-    "build":
-      "babel server.js --out-dir dist && webpack --config webpack.prod.config.js",
-    "server": "NODE_ENV=production node ./dist/server.js",
-    "dev-server": "NODE_ENV=development node ./dist/server.js"
+    "clean": "rm -rf build",
+    "start": "webpack-dev-server --host 0.0.0.0 --port 3000",
+    "build": "webpack",
+    "docker": "docker build -t admin .",
+    "server": "docker run --rm -dt --name admin -p 3030:3030 admin"
   },
   "keywords": [],
   "author": "",
@@ -22,16 +21,10 @@
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
     "awesome-typescript-loader": "^3.4.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.9",
-    "eslint-plugin-prettier": "^2.5.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.7.2",
-    "prettier": "1.10.2",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
     "typescript": "^2.6.2",
