@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './styles/styles.scss';
-import { App } from './components/App';
+import { Header } from './app/Header';
+import { SideNav } from './app/SideNav';
 
-const ROOT = document.querySelector('.container');
+const ROOT = document.querySelector('.app-body');
 
-ReactDOM.render(<App />, ROOT);
+ReactDOM.render([<Header />, <SideNav />], ROOT);

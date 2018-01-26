@@ -55,7 +55,6 @@ export class App extends React.Component<{}, IState> {
   }
 
   public render(): JSX.Element {
-    console.log(this.state);
     return (
       <div>
         <h1>l</h1>
