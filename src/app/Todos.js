@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-export class App extends React.Component<{}, IState> {
-  constructor(props: {}) {
+export class App extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -9,7 +9,7 @@ export class App extends React.Component<{}, IState> {
       tasks: [],
     };
   }
-  public handSubmit(e: React.FormEvent<HTMLFormElement>): void {
+  handSubmit(e) {
     e.preventDefault();
     this.setState({
       currentTask: '',
@@ -24,22 +24,22 @@ export class App extends React.Component<{}, IState> {
     });
   }
 
-  public deleteTask(id: number): void {
-    const tasks: Array<ITask> = this.state.tasks.filter(
-      (task: ITask) => task.id !== id
+  deleteTask(id) {
+    const tasks = this.state.tasks.filter(
+      (task) => task.id !== id
     );
     this.setState({ tasks });
   }
 
-  public toggleDone(index: number): void {
-    let task: ITask[] = this.state.tasks.splice(index, 1);
+  toggleDone(index) {
+    let task = this.state.tasks.splice(index, 1);
     task[0].completed = !task[0].completed;
-    const tasks: ITask[] = [...this.state.tasks, ...task];
+    const tasks = [...this.state.tasks, ...task];
     this.setState({ tasks: tasks });
   }
 
-  public renderTasks(): JSX.Element[] {
-    return this.state.tasks.map((task: ITask, index: number) => {
+  renderTasks() {
+    return this.state.tasks.map((task, index) => {
       return (
         <div key={task.id} className="tdl-task">
           <span className={task.completed ? 'is-completed' : ''}>
@@ -54,7 +54,7 @@ export class App extends React.Component<{}, IState> {
     });
   }
 
-  public render(): JSX.Element {
+  render() {
     return (
       <div>
         <h1>l</h1>
@@ -73,19 +73,8 @@ export class App extends React.Component<{}, IState> {
     );
   }
 
-  private _timeInMilliseconds(): number {
-    const date: Date = new Date();
+  _timeInMilliseconds() {
+    const date = new Date();
     return date.getTime();
   }
-}
-
-interface IState {
-  currentTask: string;
-  tasks: Array<ITask>;
-}
-
-interface ITask {
-  id: number;
-  value: string;
-  completed: boolean;
 }

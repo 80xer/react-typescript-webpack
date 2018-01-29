@@ -1,9 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: ['react-hot-loader/patch', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
@@ -11,27 +12,37 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
       },
       {
         enforce: 'pre',
         test: /\.js$/,
         loader: 'source-map-loader',
       },
+      // {
+      //   test: /\.sass$/,
+      //   use: ExtractTextPlugin.extract({
+      //     use: [
+      //       {
+      //         loader: 'css-loader',
+      //         options: {
+      //           minimize: true,
+      //         },
+      //       },
+      //       'sass-loader',
+      //     ],
+      //   }),
+      // },
       {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-              },
-            },
-            'sass-loader',
-          ],
-        }),
+        test: /\.sass$/, // files ending with .scss
+        use: ['css-hot-loader'].concat(
+          ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'sass-loader'],
+          })
+        ),
       },
     ],
   },
@@ -40,9 +51,14 @@ module.exports = {
       template: './index.html',
     }),
     new ExtractTextPlugin('style.css'),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.js', '.json'],
   },
   devtool: 'source-map',
+  devServer: {
+    contentBase: './build',
+    hot: true,
+  },
 };
